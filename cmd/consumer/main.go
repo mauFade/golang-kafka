@@ -6,6 +6,15 @@ func main() {
 
 }
 
-func Consume(topics []string, server string, msgChannel chan *kafka.Message) {
+func Consume(topics []string, servers string, msgChannel chan *kafka.Message) {
+	kafkaConsumer, err := kafka.NewConsumer(&kafka.ConfigMap{
+		"bootstrap.servers": servers,
+		"group.id":          "myGroup",
+		"auto.offset.reset": "earliest",
+	})
+
+	if err != nil {
+		panic(err)
+	}
 
 }
