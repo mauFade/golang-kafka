@@ -17,4 +17,17 @@ func Consume(topics []string, servers string, msgChannel chan *kafka.Message) {
 		panic(err)
 	}
 
+	err = kafkaConsumer.SubscribeTopics(topics, nil)
+
+	if err != nil {
+		panic(err)
+	}
+
+	for {
+		msg, err := kafkaConsumer.ReadMessage(-1)
+
+		if err == nil {
+			msgChannel <- msg
+		}
+	}
 }
